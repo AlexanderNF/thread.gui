@@ -1,11 +1,32 @@
 #include "threadpool.h"
 #include "thread.h"
 
+#ifdef MEMORY_LEAKS_SEARCH
+#ifdef _MSC_VER
+#ifndef _CRTDBG_MAP_ALLOC
+#define _CRTDBG_MAP_ALLOC
+#endif
+#include <crtdbg.h>
+#endif
+#if defined(_MSC_VER) && defined(_DEBUG)
+#define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
+#undef THIS_FILE
+static char THIS_FILE[] = __FILE__;
+#endif
+#endif
+
 ThreadPool *ThreadPool::m_pInstance = 0;
 
 ThreadPool::ThreadPool(QObject *parent)
 	: QObject(parent)
 {
+}
+
+ThreadPool::~ThreadPool()
+{
+	blockSignals(true);
+	stop();
+	blockSignals(false);
 }
 
 ThreadPool *ThreadPool::instance()
@@ -15,6 +36,11 @@ ThreadPool *ThreadPool::instance()
 	}
 
 	return m_pInstance;
+}
+
+void ThreadPool::deleteInstance()
+{
+	delete instance();
 }
 
 void ThreadPool::start(int threadNumber)
@@ -46,4 +72,6 @@ void ThreadPool::stop()
 
 		emit threadDeleted(threadId);
 	}
+
+	m_threads.clear();
 }

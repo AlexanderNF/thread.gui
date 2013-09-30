@@ -12,8 +12,10 @@ class ThreadPool : public QObject
 
 public:
 	ThreadPool(QObject *parent = 0);
+	~ThreadPool();
 
 	static ThreadPool *instance();
+	static void deleteInstance();
 
 	void start(int threadNumber);
 	void stop();

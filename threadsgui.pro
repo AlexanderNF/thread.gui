@@ -18,3 +18,5 @@ HEADERS = mainwindow.h \
 
 FORMS   = mainwindow.ui \
           progresswidget.ui
+
+DEFINES += MEMORY_LEAKS_SEARCH
