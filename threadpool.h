@@ -1,3 +1,6 @@
+#ifndef THREADSGUI_THREADPOOL_H
+#define THREADSGUI_THREADPOOL_H
+
 #include <QtCore/QObject>
 #include <QtCore/QVector>
 
@@ -25,3 +28,5 @@ private:
 };
 
 #define threadPool ThreadPool::instance()
+
+#endif // THREADSGUI_THREADPOOL_H

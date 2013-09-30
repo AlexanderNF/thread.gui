@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef THREADSGUI_MAINWINDOW_H
+#define THREADSGUI_MAINWINDOW_H
 
 #include <QtWidgets/QMainWindow>
 
@@ -29,8 +29,7 @@ private:
 	QVector<ProgressWidget *> m_widgets;
 	bool m_startEnabled;
 
-	void init();
 	void connect();
 };
 
-#endif // MAINWINDOW_H
+#endif // THREADSGUI_MAINWINDOW_H

@@ -23,6 +23,10 @@ void ThreadPool::start(int threadNumber)
 
 	for (int i = 0; i < threadNumber; i++) {
 		m_threads[i] = new Thread(i);
+
+		connect(m_threads[i], SIGNAL(finished()),
+				m_threads[i], SLOT(start()));
+
 		m_threads[i]->start();
 
 		emit threadStarted(m_threads[i]);

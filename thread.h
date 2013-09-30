@@ -1,5 +1,5 @@
-#ifndef GUITHREADS_THREAD_H
-#define GUITHREADS_THREAD_H
+#ifndef THREADSGUI_THREAD_H
+#define THREADSGUI_THREAD_H
 
 #include <QtCore/QThread>
 
@@ -11,9 +11,10 @@ public:
 	Thread(int id, QObject *parent = 0);
 
 	int id() const;
+	int duration() const;
+
 signals:
 	void progress(int percents);
-	void durationInited(int duration);
 
 private slots:
 	void onTimer();
@@ -24,6 +25,7 @@ private:
 	int m_currentStep;
 
 	void run();
+	void reset();
 };
 
-#endif // GUITHREADS_THREAD_H
+#endif // THREADSGUI_THREAD_H

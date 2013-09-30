@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	init();
 	connect();
 }
 
@@ -44,8 +43,12 @@ void MainWindow::onThreadStarted(const Thread *thread)
 		m_widgets.resize(threadId + 1);
 	}
 
-	m_widgets[threadId] = new ProgressWidget();
+	m_widgets[threadId] = new ProgressWidget(thread);
 	ui->horizontalLayout->insertWidget(threadId, m_widgets[threadId]);
+
+	QObject::connect(thread, SIGNAL(progress(int)),
+					 m_widgets[threadId], SLOT(setProgress(int)),
+					 Qt::QueuedConnection);
 }
 
 void MainWindow::onThreadDeleted(int threadId)
@@ -55,10 +58,6 @@ void MainWindow::onThreadDeleted(int threadId)
 		ui->horizontalLayout->removeWidget(widget);
 		delete m_widgets[threadId];
 	}
-}
-
-void MainWindow::init()
-{
 }
 
 void MainWindow::connect()
